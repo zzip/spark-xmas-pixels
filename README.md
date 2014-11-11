@@ -5,7 +5,6 @@ Requirements
 * [Spark Core](http://spark.io/)
 * [Ruby](http://ruby-lang.org/)
 
-
 Instructions
 ------------
 
@@ -18,14 +17,8 @@ Instructions
 ### Ruby part
 
 1. `gem install bundler`
-
 2. `bundle install`
-
 3. `copy config.yml.example config.yml`
-
 4. edit config.yml and set your authentication_token and device_id(s)
-
 5. `ruby server.rb`
-
 6. open up a browser and surf to [http://localhost:4567/](http://localhost:4567/)
-
