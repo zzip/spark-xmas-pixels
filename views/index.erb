@@ -1,0 +1,122 @@
+<html>
+  <head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/spectrum.css">
+    <title>XMAS</title>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class= "row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="well">
+            <%= @result%>
+          </div>
+        </div>
+      </div>
+
+      <form class="form-inline" action="/generic" method="post" role="form">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="btn-group btn-sm pull-right">
+                <button type="submit" class="btn btn-default" name="cmd" value="r">Rainbow</button>
+                <button type="submit" class="btn btn-default" name="cmd" value="R">Rainbow 2</button>
+                <button type="submit" class="btn btn-default" name="cmd" value="-">Stop</button>
+                <button type="submit" class="btn btn-default" name="cmd" value="o">Off</button>
+              </div>
+
+              <div class="btn-group btn-sm">
+                  <button type="submit" class="btn btn-default" name="cmd" value="s">Strobe</button>
+                  <button type="submit" class="btn btn-default" name="cmd" value="f">Fill</button>
+                  <button type="submit" class="btn btn-default" name="cmd" value="w">Wipe &lt;-</button>
+                  <button type="submit" class="btn btn-default" name="cmd" value="W">Wipe -&gt;</button>
+              </div>
+
+              <div class="btn-group btn-sm">
+                  <button type="submit" class="btn btn-default" name="cmd" value="i">Fire</button>
+                  <button type="submit" class="btn btn-default" name="cmd" value="l">Linerider</button>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="form-group form-group-sm">
+                <label for="inputColor" class="sr-only">RGB</label>
+                <input type="text" class="form-control color-picker" name="color" id="inputColor" placeholder="color" value="<%= params[:color] %>">
+              </div>
+
+              <div class="form-group form-group-xsm">
+                <label for="inputDelay">Delay</label>
+                <input type="text" class="form-control" name="delay" id="inputDelay" placeholder="Delay" value="<%= params[:delay] %>">
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="1" name="clear"> Clear first
+                </label>
+              </div>
+
+            </div>
+        </div>
+
+      </form>
+
+
+    </div>
+
+
+    <div class="container">
+
+      <form class="form-inline" action="/sequence" method="post" role="form">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="form-group form-group-sm">
+                <label for="inputSequence" class="">Sequence (eg : W1R9o1l9s9i5r9W1w2l9R1l1R1l1r1o9W1w1W1w1R1r1s9i9R1l2)</label>
+                <input type="text" class="form-control" name="sequence" id="inputSequence" placeholder="sequence" value="<%= params[:sequence] %>">
+              </div>
+
+              <button type="submit" class="btn btn-default" name="cmd" value="i">Go</button>
+
+            </div>
+        </div>
+
+      </form>
+
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/spectrum.js"></script>
+    <script>
+      $(".color-picker").spectrum({
+        //color: "#f00",
+        //flat: bool,
+        showInput: true,
+        showInitial: true,
+        allowEmpty: false,
+        showAlpha: false,
+        showButtons: false,
+        localStorageKey: 'spectrum.xmas',
+        showPalette: true,
+        showPaletteOnly: false,
+        togglePaletteOnly: false,
+        showSelectionPalette: true,
+        hideAfterPaletteSelect: true,
+        clickoutFiresChange: true,
+        containerClassName: 'color-picker-spectrum',
+        preferredFormat: 'hex',
+        //maxSelectionSize: int,
+      });
+    </script>
+
+  </body>
+</html>
