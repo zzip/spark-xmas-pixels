@@ -8,7 +8,7 @@ CONFIG = YAML.load_file("./config.yml")[env]
 
 RubySpark.configuration do |config|
   config.access_token = CONFIG['auth_token']
-  config.timeout      = 10 #.seconds # defaults to 30 seconds
+  #config.timeout      = 30 #.seconds # defaults to 30 seconds
 end
 
 # TODO: loop through your different cores

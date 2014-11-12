@@ -29,6 +29,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 bool clear_first = false;
 int cycle_wait = 10;
 int duration = 1000;
+int brightness = 255;
 byte red = 1;
 byte green = 1;
 byte blue = 1;
@@ -66,7 +67,8 @@ int handleParams(String command) {
     int p = 0;
 
     //stop the sequence
-    sequence1[0] = '-';
+
+
 
     while (p<(int)command.length()) {
         int i = command.indexOf(',',p);
@@ -75,6 +77,9 @@ int handleParams(String command) {
         if (j<0) break;
         String key = command.substring(p,j);
         String value = command.substring(j+1,i);
+
+        if (key!="brightness")
+            sequence1[0] = '-';
 
         // global params
         if (key=="wait")
@@ -85,6 +90,12 @@ int handleParams(String command) {
             clear_first = (value=="1");
         else if (key=="duration")
             duration = value.toInt();
+        else if (key=="brightness") {
+            brightness = value.toInt();
+            strip.setBrightness(brightness);
+            strip.show();
+            break;
+        }
         else if (key=="r")
             red = value.toInt();
         else if (key=="g")
@@ -108,6 +119,7 @@ int handleParams(String command) {
 
 int processParams() {
     if (state == 0) {
+      Spark.publish("new-cmd", &cmd, 60, PRIVATE);
       state = 1;
     }
 
@@ -181,6 +193,7 @@ int processSequence() {
         blue = seq_blue;
         green = seq_green;
         current_sequence_count = 0;
+        state = 0;
         processSequence();
         //if play_count = current_sequence_count, get following sequence cmd, set current_sequence_count to 0 and call processParams for actually doing the effect
     }

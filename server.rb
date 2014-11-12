@@ -25,6 +25,7 @@ post '/generic' do
   args << "wait:#{params[:delay]}" unless params[:delay].to_s.empty?
   args << "duration:#{params[:duration]}" unless params[:duration].to_s.empty?
   args << "clear:#{params[:clear]}" unless params[:clear].to_s.empty?
+  args << "brightness:#{params[:brightness]}" unless params[:brightness].to_s.empty?
 
   @result = send_to_core(cmd: "handleparams", argument: args.join(',') )
 
@@ -48,6 +49,7 @@ get '/debug/:cmd/:color/:delay' do
   args << "wait:#{params[:delay]}" unless params[:delay].to_s.empty?
   args << "duration:#{params[:duration]}" unless params[:duration].to_s.empty?
   args << "clear:#{params[:clear]}" unless params[:clear].to_s.empty?
+  args << "brightness:#{params[:brightness]}" unless params[:brightness].to_s.empty?
 
   @result = send_to_core(cmd: "handleparams", argument: args.join(',') )
 
