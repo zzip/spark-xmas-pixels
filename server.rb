@@ -68,6 +68,11 @@ get '/wipe_hex/:color' do
   erb :index
 end
 
+post '/adjust_brightness' do
+  @result = send_to_core(cmd: "handleparams", argument: "brightness:#{params[:brightness]}")
+
+  erb :index
+end
 
 #CI Project
 =begin

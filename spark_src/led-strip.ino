@@ -94,7 +94,6 @@ int handleParams(String command) {
             brightness = value.toInt();
             strip.setBrightness(brightness);
             strip.show();
-            break;
         }
         else if (key=="r")
             red = value.toInt();
@@ -159,6 +158,9 @@ int processParams() {
         case 'l':
             linerider(cycle_wait);
             return 4;
+        case 'L':
+            lightUp(cycle_wait);
+            return 10;
         case 'i':
             fire();
             return 5;
@@ -308,6 +310,10 @@ void fill(uint8_t r, uint8_t g, uint8_t b)
 }
 
 
+void lightUp(uint8_t wait) {
+  for(byte percent=0; percent <= 100; percent++) //Strip crash on USB Power
+    { strobe(255, 255, 255, percent, wait); }
+}
 
 void breath(uint8_t wait)
 {
