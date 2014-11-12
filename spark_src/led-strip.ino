@@ -131,6 +131,9 @@ int processParams() {
         case 'b': //breath
             breath(cycle_wait);
             return 2048;
+        case 'c': //cylon
+            cylon(cycle_wait);
+            return 2048;
         case 'r': //rainbow
             rainbow(cycle_wait);
             return 4096;
@@ -240,16 +243,6 @@ void loop() {
   for(int i=0;i<=2;i++)
     { linerider(1200); //20*60 }
 
-  for(byte percent=0; percent <= 100; percent++) //Strip crash on USB Power
-    { strobe(255, 255, 255, percent, 25, 100); }
-
-  for(i=1; i <= 3; i++)
-  {
-    if (i>3)
-      i-=3;
-    wipe(255/2*(2-i)*(3-i),-255*(1-i)*(3-i),255/2*(1-i)*(2-i),250);
-    wipe(0,0,0,250);
-  }
 */
 
 
@@ -345,6 +338,16 @@ void fade_out( uint8_t wait)
     }
 }
 
+void cylon ( uint8_t wait)
+{
+  for(int i=1; i <= 3; i++)
+  {
+    if (i>3)
+      i-=3;
+    wipe(1, 255/2*(2-i)*(3-i),-255*(1-i)*(3-i),255/2*(1-i)*(2-i),wait);
+    wipe(1, 0,0,0,wait);
+  }
+}
 
 //dir = 1 => away from source, -1 => to source
 void wipe(int dir, uint8_t r, uint8_t g, uint8_t b, uint8_t wait)
