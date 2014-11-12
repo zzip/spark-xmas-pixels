@@ -129,6 +129,9 @@ int processParams() {
     }
 
     switch (cmd) {
+        case 'b': //breath
+            breath(cycle_wait);
+            return 2048;
         case 'r': //rainbow
             rainbow(cycle_wait);
             return 4096;
@@ -142,6 +145,9 @@ int processParams() {
             fill(red, green, blue);
             cmd='-';
             return 2;
+        case 'F': //Fade In
+            fade_in(cycle_wait);
+            return 6;
         case 'w':
             wipe(1, red, green, blue, cycle_wait);
             cmd='-';
@@ -160,6 +166,9 @@ int processParams() {
             fill(0,0,0);
             cmd='-';
             return 0;
+        case 'O':
+            fade_out(cycle_wait);
+            return 7;
         default:
             delay(5);
             return 128;
@@ -298,6 +307,39 @@ void fill(uint8_t r, uint8_t g, uint8_t b)
   strip.show();
 }
 
+
+
+void breath(uint8_t wait)
+{
+  fade_in(wait);
+  fade_out(wait);
+}
+
+void fade_in(uint8_t wait)
+{
+    for(int i=brightness; i < 255 ; i++)
+    {
+      //setColor(i,r,g,b);
+      brightness += 1;
+      strip.setBrightness(brightness);
+      strip.show();
+      delay(wait);
+    }
+}
+
+void fade_out( uint8_t wait)
+{
+    for(int i=brightness; i > 1; i--)
+    {
+      //setColor(i,r,g,b);
+      brightness -= 1;
+      strip.setBrightness(brightness);
+      strip.show();
+      delay(wait);
+    }
+}
+
+
 //dir = 1 => away from source, -1 => to source
 void wipe(int dir, uint8_t r, uint8_t g, uint8_t b, uint8_t wait)
 {
@@ -310,7 +352,7 @@ void wipe(int dir, uint8_t r, uint8_t g, uint8_t b, uint8_t wait)
     }
   }
   else if (dir==-1) {
-    for(int i=strip.numPixels()-1; i > 0; i--)
+    for(int i=strip.numPixels()-1; i >= 0; i--)
     {
       setColor(i,r,g,b);
       strip.show();
