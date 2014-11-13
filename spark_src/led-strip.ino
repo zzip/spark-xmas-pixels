@@ -134,6 +134,29 @@ int processParams() {
         case 'c': //cylon
             cylon(cycle_wait);
             return 2048;
+        case 'f': //fill
+            fill(red, green, blue);
+            cmd='-';
+            return 2;
+        case 'F': //Fade In
+            fade_in(cycle_wait);
+            return 6;
+        case 'i':
+            fire();
+            return 5;
+        case 'l':
+            linerider(cycle_wait);
+            return 4;
+        case 'L':
+            lightUp(cycle_wait);
+            return 10;
+        case 'o':
+            fill(0,0,0);
+            cmd='-';
+            return 0;
+        case 'O':
+            fade_out(cycle_wait);
+            return 7;
         case 'r': //rainbow
             rainbow(cycle_wait);
             return 4096;
@@ -143,13 +166,6 @@ int processParams() {
         case 's': //strobe
             strobe(red, green, blue, 15, cycle_wait);
             return 1;
-        case 'f': //fill
-            fill(red, green, blue);
-            cmd='-';
-            return 2;
-        case 'F': //Fade In
-            fade_in(cycle_wait);
-            return 6;
         case 'w':
             wipe(1, red, green, blue, cycle_wait);
             cmd='-';
@@ -158,22 +174,6 @@ int processParams() {
             wipe(-1, red, green, blue, cycle_wait);
             cmd='-';
             return 3;
-        case 'l':
-            linerider(cycle_wait);
-            return 4;
-        case 'L':
-            lightUp(cycle_wait);
-            return 10;
-        case 'i':
-            fire();
-            return 5;
-        case 'o':
-            fill(0,0,0);
-            cmd='-';
-            return 0;
-        case 'O':
-            fade_out(cycle_wait);
-            return 7;
         default:
             delay(5);
             return 128;
