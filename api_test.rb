@@ -8,7 +8,7 @@ CONFIG = YAML.load_file("./config.yml")[env]
 
 RubySpark.configuration do |config|
   config.access_token = CONFIG['auth_token']
-  #config.timeout      = 30 #.seconds # defaults to 30 seconds
+  config.timeout      = 20 # defaults to 30.seconds
 end
 
 # TODO: loop through your different cores
@@ -25,4 +25,7 @@ def send_to_core(cmd: "handleparams", argument: "cmd:w,r:255,g:255,b:255,wait:10
 
   puts "call #{cmd} #{argument} took #{stop-start}s result #{result}"
   return "call #{cmd} #{argument} took #{stop-start}s result #{result}"
+rescue Net::ReadTimeout
+  puts "connection to api.spark.io timed out"
+  return "connection to api.spark.io timed out"
 end
