@@ -19,7 +19,6 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
 bool clear_first = false;
 int cycle_wait = 10;
-int duration = 1000;
 int brightness = 255;
 byte red = 1;
 byte green = 1;
@@ -79,8 +78,6 @@ int handleParams(String command) {
             cmd = value[0];
         else if (key=="clear")
             clear_first = (value=="1");
-        else if (key=="duration")
-            duration = value.toInt();
         else if (key=="brightness") {
             brightness = value.toInt();
             strip.setBrightness(brightness);
@@ -405,7 +402,7 @@ uint32_t Wheel(byte WheelPos) {
   }
 }
 
-void strobe(uint8_t r, uint8_t g, uint8_t b, byte percent, uint8_t wait) { //, uint16_t duration) {
+void strobe(uint8_t r, uint8_t g, uint8_t b, byte percent, uint8_t wait) {
   int i;
 
   //do this only on initial call
@@ -432,7 +429,7 @@ void strobe(uint8_t r, uint8_t g, uint8_t b, byte percent, uint8_t wait) { //, u
   delay(wait);
 }
 
-void fire() //(uint16_t duration)
+void fire()
 {
     byte rand;
     for (int i=0; i < strip.numPixels(); i++)
