@@ -9,10 +9,20 @@ Instructions
 ------------
 
 ### Spark part
-1. Copy the spark_src/led-strip.ino file into the Spark IDE as a new app.  
-2. Be sure to add the NeoPixel library for that app.  
-3. Set the `PIXEL_COUNT` and the `CONVERT_AT` values.  
-4. Verify and flash to your core(s)
+
+If you have the [spark-cli tool](https://github.com/spark/spark-cli) installed : 
+
+1. Open `spark_src/spark-xmas-pixels.ino` and change the `PIXEL_COUNT` and the `CONVERT_AT` values.
+2. `spark flash DEVICE_ID spark_src` (replace `DEVICE_ID` with your core device id)
+
+If instead you want to use the [Spark WEB IDE](http://spark.io/build) :
+
+1. Open `spark_src/spark-xmas-pixels.ino` and change the `PIXEL_COUNT` and the `CONVERT_AT` values.  
+2. Copy the `spark_src/spark-xmas-pixels.ino` file into the Spark IDE as a new app.
+3. Change `#include "neopixel.h"` to `#include "neopixel/neopixel.h"`
+4. Be sure to add the NeoPixel library for that app.
+5. Verify and flash to your core(s)
+
 
 ### Ruby part
 

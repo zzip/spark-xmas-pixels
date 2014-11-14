@@ -1,27 +1,18 @@
-// This #include statement was automatically added by the Spark IDE.
-#include "neopixel/neopixel.h"
-
-/*
- * This is a minimal example, see extra-examples.cpp for a version
- * with more explantory documentation, example routines, how to
- * hook up your pixels and all of the pixel types that are supported.
- *
- */
-
 #include "application.h"
+#include "neopixel.h"
 //#include "spark_disable_wlan.h" // For faster local debugging only
 
 
 // IMPORTANT: Set pixel COUNT, PIN and TYPE
 #define PIXEL_PIN A7
-#define PIXEL_COUNT 61
+#define PIXEL_COUNT 11
 #define PIXEL_TYPE WS2812
 
 // CONVERT_AT (for combining WS2811 and WS2812 (r,g,b) and (g,r,b))
 // set this to the pixel number where your WS2811 strip starts if any
 // we assume the first part of your strip is WS2812
 // set to -1 if you only use a WS2811 strip
-#define CONVERT_AT 10
+#define CONVERT_AT 12
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
