@@ -16,8 +16,7 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
-
-bool clear_first = false;
+//bool clear_first = false;
 int cycle_wait = 10;
 int brightness = 255;
 byte red = 1;
@@ -68,17 +67,18 @@ int handleParams(String command) {
         String key = command.substring(p,j);
         String value = command.substring(j+1,i);
 
-        if (key!="brightness")
+        //only interrupt the sequence if we receive a new effect
+        if (key=="E")
             sequence1[0] = '-';
 
         // global params
-        if (key=="wait")
+        if (key=="w")
             cycle_wait = value.toInt();
-        else if (key=="cmd")
+        else if (key=="E")
             cmd = value[0];
-        else if (key=="clear")
-            clear_first = (value=="1");
-        else if (key=="brightness") {
+        //else if (key=="C")
+        //    clear_first = (value=="1");
+        else if (key=="B") {
             brightness = value.toInt();
             strip.setBrightness(brightness);
             strip.show();
@@ -89,7 +89,7 @@ int handleParams(String command) {
             green = value.toInt();
         else if (key=="b")
             blue = value.toInt();
-        else if (key=="hexcolor") {
+        else if (key=="c") {
             String hexcolor = value;
             int number = (int) strtol( &hexcolor[1], NULL, 16);
             red = number >> 16;
@@ -110,10 +110,10 @@ int processParams() {
       state = 1;
     }
 
-    if (clear_first == true) {
-      fill(0,0,0);
-      clear_first = false;
-    }
+//    if (clear_first == true) {
+//      fill(0,0,0);
+//      clear_first = false;
+//    }
 
     switch (cmd) {
         case 'b': //breath

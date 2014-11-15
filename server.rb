@@ -20,12 +20,11 @@ end
 post '/generic' do
   puts params.inspect
   args = []
-  args << "cmd:#{params[:cmd]}" unless params[:cmd].to_s.empty?
-  args << "hexcolor:#{params[:color]}" unless params[:color].to_s.empty?
-  args << "wait:#{params[:delay]}" unless params[:delay].to_s.empty?
-  args << "duration:#{params[:duration]}" unless params[:duration].to_s.empty?
-  args << "clear:#{params[:clear]}" unless params[:clear].to_s.empty?
-  args << "brightness:#{params[:brightness]}" unless params[:brightness].to_s.empty?
+  args << "E:#{params[:cmd]}" unless params[:cmd].to_s.empty?
+  args << "c:#{params[:color]}" unless params[:color].to_s.empty?
+  args << "w:#{params[:delay]}" unless params[:delay].to_s.empty?
+  args << "C:#{params[:clear]}" unless params[:clear].to_s.empty?
+  args << "B:#{params[:brightness]}" unless params[:brightness].to_s.empty?
 
   @result = send_to_core(cmd: "handleparams", argument: args.join(',') )
 
@@ -44,12 +43,11 @@ end
 get '/debug/:cmd/:color/:delay' do
   puts params.inspect
   args = []
-  args << "cmd:#{params[:cmd]}" unless params[:cmd].to_s.empty?
-  args << "hexcolor:#{params[:color]}" unless params[:color].to_s.empty?
-  args << "wait:#{params[:delay]}" unless params[:delay].to_s.empty?
-  args << "duration:#{params[:duration]}" unless params[:duration].to_s.empty?
-  args << "clear:#{params[:clear]}" unless params[:clear].to_s.empty?
-  args << "brightness:#{params[:brightness]}" unless params[:brightness].to_s.empty?
+  args << "E:#{params[:cmd]}" unless params[:cmd].to_s.empty?
+  args << "c:#{params[:color]}" unless params[:color].to_s.empty?
+  args << "w:#{params[:delay]}" unless params[:delay].to_s.empty?
+  args << "C:#{params[:clear]}" unless params[:clear].to_s.empty?
+  args << "B:#{params[:brightness]}" unless params[:brightness].to_s.empty?
 
   @result = send_to_core(cmd: "handleparams", argument: args.join(',') )
 
@@ -57,19 +55,19 @@ get '/debug/:cmd/:color/:delay' do
 end
 
 get '/wipe_rgb/:red/:green/:blue' do
-  @result = send_to_core(cmd: "handleparams", argument: "cmd:wipe,r:#{params[:red]},g:#{params[:green]},b:#{params[:blue]}")
+  @result = send_to_core(cmd: "handleparams", argument: "E:w,r:#{params[:red]},g:#{params[:green]},b:#{params[:blue]}")
 
   erb :index
 end
 
 get '/wipe_hex/:color' do
-  @result = send_to_core(cmd: "handleparams", argument: "cmd:wipe,hexcolor:#{params[:color]}")
+  @result = send_to_core(cmd: "handleparams", argument: "E:w,c:#{params[:color]}")
 
   erb :index
 end
 
 post '/adjust_brightness' do
-  @result = send_to_core(cmd: "handleparams", argument: "brightness:#{params[:brightness]}")
+  @result = send_to_core(cmd: "handleparams", argument: "B:#{params[:brightness]}")
 
   erb :index
 end
