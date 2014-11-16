@@ -15,7 +15,7 @@ end
 $core = RubySpark::Core.new(CONFIG['devices'][0])
 ap $core.info
 
-def send_to_core(cmd: "handleparams", argument: "cmd:w,r:255,g:255,b:255,wait:100")
+def send_to_core(cmd: "handleparams", argument: "E:w,r:255,g:255,b:255,w:100")
   #puts "sending #{cmd} #{argument}"
 
   start = Time.now
@@ -23,8 +23,8 @@ def send_to_core(cmd: "handleparams", argument: "cmd:w,r:255,g:255,b:255,wait:10
   result = $core.function cmd,argument
   stop = Time.now
 
-  puts "call #{cmd} #{argument} took #{stop-start}s result #{result}"
-  return "call #{cmd} #{argument} took #{stop-start}s result #{result}"
+  puts "call #{cmd} #{argument} took #{stop-start}s result #{result} size #{argument.size}"
+  return "call #{cmd} #{argument} took #{stop-start}s result #{result} size #{argument.size}"
 rescue Net::ReadTimeout
   puts "connection to api.spark.io timed out"
   return "connection to api.spark.io timed out"
