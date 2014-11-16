@@ -5,18 +5,64 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" type="text/css" href="/spectrum.css">
-  <link rel="stylesheet" type="text/css" href="/bootstrap-slider.min.css">
+  <link rel="stylesheet" type="text/css" href="./spectrum.css">
+  <link rel="stylesheet" type="text/css" href="./bootstrap-slider.min.css">
+
+  <style>
+    .slider .slider-selection {
+      background: #BABABA;
+    }
+    .slider.slider-horizontal {
+      width: 310px;
+    }
+  </style>
+
   <title>XMAS</title>
 </head>
 
 <body>
 
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span>
+        XMAS
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="navbar-right">
+      <div id="spark-login"></div>
+      <button type="button" class="btn btn-default navbar-btn navbar-right hidden" id="btnLogout">Log Out</button>
+      </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+
+
+
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
+        <div id="alerts"></div>
         <div class="well">
-          <%= @result %>
+          <p id="feedback"></p>
+          <p id="sse">&nbsp;</p>
+
         </div>
       </div>
     </div>
@@ -24,14 +70,14 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-8">
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="<%= request.path == '/generic' ? 'active' : '' %>">
+          <li role="presentation" class="active">
             <a href="#effects" role="tab" data-toggle="tab">Effects</a>
           </li>
-          <li role="presentation" class="<%= request.path == '/sequence' ? 'active' : '' %>">
+          <li role="presentation" class="">
             <a href="#sequence" role="tab" data-toggle="tab">Sequence</a>
           </li>
         </ul>
@@ -39,40 +85,33 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <!-- Effects pane -->
-          <div role="tabpanel" class="tab-pane <%= request.path == '/generic' ? 'active' : '' %>" id="effects">
-            <form class="form-horizontal" action="/generic" method="post" role="form">
+          <div role="tabpanel" class="tab-pane active" id="effects">
+            <form class="form-horizontal" id="genericForm" action="/generic" method="post" role="form">
               <p>&nbsp;</p>
+
               <div class="form-group form-group-sm">
-                <label for="inputColor" class="col-sm-2 control-label">Color</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control color-picker" name="color" id="inputColor" placeholder="color" value="<%= params[:color] %>">
+                <label for="inputBrightness" class="col-sm-3 control-label inputBrightnessVal">
+                  Brightness
+                </label>
+                <div class="col-sm-8">
+                  <input type="text" class="bs-slider" name="brightness" id="inputBrightness" placeholder="Brightness (1-255)" value="" data-slider-min="1" data-slider-max="255" data-slider-step="1" data-slider-id='brSlider' data-slider-value="">
+                </div>
+              </div>
+
+              <div id="colorpicker1"></div>
+              <div class="form-group form-group-sm">
+                <label for="inputColor" class="col-sm-3 control-label">Color</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control color-picker" name="color" id="inputColor" placeholder="color" value="">
                 </div>
               </div>
 
               <div class="form-group form-group-sm">
-                <label for="inputDelay" class="col-sm-2 control-label">Delay</label>
+                <label for="inputDelay" class="col-sm-3 control-label">Delay</label>
                 <div class="col-sm-2">
-                  <input type="text" class="form-control" name="delay" id="inputDelay" placeholder="Delay" value="<%= params[:delay] %>">
+                  <input type="number" min="1" max="500" class="form-control" name="delay" id="inputDelay" placeholder="Delay" value="">
                 </div>
               </div>
-
-              <div class="form-group form-group-sm">
-                <label for="inputBrightness" class="col-sm-2 control-label">Brightness</label>
-                <div class="col-sm-4">
-                  <input type="text" class="" name="brightness" id="inputBrightness" placeholder="Brightness (1-255)" value="<%= params[:brightness] %>" data-slider-min="1" data-slider-max="255" data-slider-step="1" data-slider-id='brSlider' data-slider-value="<%= params[:brightness] %>">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" value="1" name="clear">Clear first
-                    </label>
-                  </div>
-                </div>
-              </div>
-
 
               <div class="form-group form-group-sm">
                 <div class="col-sm-12">
@@ -112,9 +151,21 @@
           </div>
 
           <!-- Sequence pane -->
-          <div role="tabpanel" class="tab-pane <%= request.path == '/sequence' ? 'active' : '' %>" id="sequence">
-            <form class="form-horizontal" action="/sequence" method="post" role="form">
+          <div role="tabpanel" class="tab-pane" id="sequence">
+            <form class="form-horizontal" action="/sequence" method="post" role="form" id="sequenceForm">
               <p>&nbsp;</p>
+
+              <div class="form-group form-group-md">
+                <label for="inputBrightness" class="col-sm-3 control-label inputBrightnessVal">
+                  Brightness
+                </label>
+
+                <div class="col-sm-8">
+                  <input type="text" class="bs-slider" name="brightness" id="inputAdjustBrightness" placeholder="Brightness (1-255)" value="" data-slider-min="1" data-slider-max="255" data-slider-step="1" data-slider-id='brSlider' data-slider-value="">
+                </div>
+
+              </div>
+
 
               <div class="form-group form-group-sm">
                 <label for="inputSequence" class="col-sm-2 control-label">
@@ -122,7 +173,7 @@
                 </label>
 
                 <div class="col-sm-8">
-                  <input type="text" class="form-control" name="sequence" id="inputSequence" placeholder="sequence" value="<%= params[:sequence] %>">
+                  <input type="text" class="form-control" name="sequence" id="inputSequence" placeholder="sequence" value="">
                   <span class="help-block">
                     (eg : W1R9o1l9s9i5r9W1w2l9R1l1R1l1r1o9W1w1W1w1R1r1s9i9R1l2)
                   </span>
@@ -131,7 +182,7 @@
 
               <div class="form-group form-group-sm">
                 <div class="col-sm-12">
-                  <button type="submit" class="btn btn-default" name="cmd" value="i">Go</button>
+                  <button type="submit" class="btn btn-default">Go</button>
                 </div>
               </div>
 
@@ -163,27 +214,6 @@
 
 
             </form>
-            <form class="form-horizontal" action="/adjust_brightness" method="post" role="form">
-              <p>&nbsp;</p>
-
-              <div class="form-group form-group-sm">
-                <label for="inputBrightness" class="col-sm-2 control-label">
-                  Brightness
-                </label>
-
-                <div class="col-sm-8">
-                  <input type="text" class="" name="brightness" id="inputAdjustBrightness" placeholder="Brightness (1-255)" value="<%= params[:brightness] %>" data-slider-min="1" data-slider-max="255" data-slider-step="1" data-slider-id='brSlider' data-slider-value="<%= params[:brightness] %>">
-                </div>
-
-              </div>
-
-              <div class="form-group form-group-sm">
-                <div class="col-sm-12">
-                  <button type="submit" class="btn btn-default">Go</button>
-                </div>
-              </div>
-            </form>
-
 
           </div>
 
@@ -195,43 +225,11 @@
 
   <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/spectrum.js"></script>
-  <script type="text/javascript" src="/bootstrap-slider.min.js"></script>
-  <script>
-  $(".color-picker").spectrum({
-    //color: "#f00",
-    //flat: bool,
-    showInput: true,
-    showInitial: true,
-    allowEmpty: false,
-    showAlpha: false,
-    showButtons: false,
-    localStorageKey: 'spectrum.xmas',
-    showPalette: true,
-    showPaletteOnly: false,
-    togglePaletteOnly: false,
-    showSelectionPalette: true,
-    hideAfterPaletteSelect: true,
-    clickoutFiresChange: true,
-    containerClassName: 'color-picker-spectrum',
-    preferredFormat: 'hex',
-    //maxSelectionSize: int,
-  });
-
-  $('#inputBrightness').slider({
-    formatter: function(value) {
-      return 'Brightness: ' + value;
-    }
-  });
-
-  $('#inputAdjustBrightness').slider({
-    formatter: function(value) {
-      return 'Brightness: ' + value;
-    }
-  });
-
-  </script>
-
+  <script type="text/javascript" src="./spectrum.js"></script>
+  <script type="text/javascript" src="./bootstrap-slider.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/sparkjs/0.2.2/spark.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./app.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./spark.js"></script>
 </body>
 
 </html>
