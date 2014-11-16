@@ -19,9 +19,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 //bool clear_first = false;
 int cycle_wait = 10;
 int brightness = 255;
-byte red = 1;
-byte green = 1;
-byte blue = 1;
+int red = 1;
+int green = 1;
+int blue = 1;
 char cmd = 'f';
 
 //-----------------------------1---------2---------3---------4---------5---------6----
@@ -109,11 +109,6 @@ int processParams() {
       Spark.publish("new-cmd", &cmd, 60, PRIVATE);
       state = 1;
     }
-
-//    if (clear_first == true) {
-//      fill(0,0,0);
-//      clear_first = false;
-//    }
 
     switch (cmd) {
         case 'b': //breath
@@ -215,6 +210,13 @@ void setup() {
   //--------------123456789012------------------
   Spark.function("handleparams", handleParams);
   Spark.function("setsequence", setSequence);
+
+  Spark.variable("delay", &cycle_wait, INT);
+  Spark.variable("brightness", &brightness, INT);
+  Spark.variable("red", &red, INT);
+  Spark.variable("green", &green, INT);
+  Spark.variable("blue", &blue, INT);
+  Spark.variable("effect", &cmd, STRING);
 }
 
 void loop() {
