@@ -3,7 +3,7 @@ Simple mashup to control a WS2811/WS2812B led strip connected to a [Spark Core](
 Requirements
 ------------
 * [Spark Core](http://spark.io/)
-* [Ruby](http://ruby-lang.org/)
+* ~~[Ruby](http://ruby-lang.org/)~~
 
 Instructions
 ------------
@@ -23,12 +23,18 @@ If instead you want to use the [Spark WEB IDE](http://spark.io/build) :
 4. Be sure to add the NeoPixel library for that app.
 5. Verify and flash to your core(s)
 
+### Browser part
 
-### Ruby part
+1. Open `public/index.html` in a browser.
+2. Press the Login button and log in to Particle.io
+3. The id of your Particle Core is fetched from Particle.io
+4. Play with the lights
 
-1. `gem install bundler`
-2. `bundle install`
-3. `copy config.yml.example config.yml`
-4. edit config.yml and set your authentication_token and device_id(s)
-5. `ruby server.rb`
-6. open up a browser and surf to [http://localhost:4567/](http://localhost:4567/)
+~~### Ruby part~~
+
+1. ~~`gem install bundler`~~
+2. ~~`bundle install`~~
+3. ~~`copy config.yml.example config.yml`~~
+4. ~~edit config.yml and set your authentication_token and device_id(s)~~
+5. ~~`ruby server.rb`~~
+6. ~~open up a browser and surf to [http://localhost:4567/](http://localhost:4567/)~~
